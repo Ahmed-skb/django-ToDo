@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Todo</th>
+            <th scope="col">status</th>
+            <th scope="col">action</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for item in allItems %}
+        <tr>
+            <td {% if item.completed == True %} style="text-decoration: line-through;"
+                {% endif %}>{{ item.item }}</td>
+            <td>
+                {% if item.completed == True %} 
+                  <a style="color: #50dc70;" href="{% url 'cross_off' item.id %}">
+                    <i class="fas fa-check-circle"></i></a>
+                {% else %} 
+                    <a style="color: #bd2130;" href="{% url 'cross_off' item.id %}"><i
+                            class="fas fa-times-circle"></i></a>
+                {% endif %}
+            </td>
+            <td> 
+                <a class="btn btn-danger" href="{% url 'delete' item.id %}">Delete</a>
+                <a class="btn btn-primary" href="{% url 'edit' item.id %}">edit</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

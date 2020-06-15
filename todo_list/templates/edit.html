@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if item %}
+        <form class="form my-2 my-lg-4 text-center" method="post">
+            {% csrf_token %}
+            <input class="form-control mr-sm-2 mb-2" type="search" placeholder="{{item.item}}" value="{{item.item}}"
+                aria-label="edit"
+                name="item">
+            <input type="hidden" value="{{item.completed}}" name="completed">
+            <button class="btn btn-success my-2 my-sm-0" type="submit">Edit</button>
+        </form>
+    {% endif %}
+{% endblock %}
