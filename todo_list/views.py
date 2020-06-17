@@ -63,3 +63,12 @@ def edit(request, list_id):
         }
         return render(request, 'edit.html', context)
 
+def login(request):
+    context={}
+    return render(request, 'login.html', context)
+
+
+def signup(request):
+    context = {}
+    return render(request, 'signup.html', context)
+
