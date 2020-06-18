@@ -84,6 +84,36 @@ def login(request):
 
 
 def signup(request):
-    context = {}
-    return render(request, 'signup.html', context)
+    if request.method == 'POST':
+        #get all data
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+
+        #password check
+        if password == password2:
+            #username is_exist check
+            if User.objects.filter(username=username).exists():
+                messages.error(request, 'Username has been taken!!')
+                return redirect('signup')
+            else:
+                #email check
+                if User.objects.filter(email=email).exists():
+                    messages.error(request, 'Email has being used!!')
+                    return redirect('signup')
+                else:
+                    #create user
+                    user = User.objects.create_user(username=username, password=password, email=email, first_name = first_name, last_name=last_name)
+                    user.save()
+                    messages.success(request, 'You Are now a register user.Login HERE!')
+                    return redirect('login')
+        else:
+            messages.error(request, 'Password do not matched!!')
+            return redirect('signup')
+    else:
+        context = {}
+        return render(request, 'signup.html', context)
 
