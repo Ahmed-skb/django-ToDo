@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 from .models import List
 
 from .forms import ListForm
-from django.contrib import messages
+from django.contrib import messages, auth
+
+from django.contrib.auth.models import User
 
 # Create your views here.
 def home(request):
@@ -64,8 +66,21 @@ def edit(request, list_id):
         return render(request, 'edit.html', context)
 
 def login(request):
-    context={}
-    return render(request, 'login.html', context)
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            messages.success(request, 'You are now logged in')
+            return redirect('home')
+        else:
+            messages.error(request, 'Invalid Credential')
+            return redirect('login')
+    else:
+        context={}
+        return render(request, 'login.html', context)
 
 
 def signup(request):
