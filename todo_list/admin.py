@@ -3,7 +3,7 @@ from .models import List
 
 
 class ListConf(admin.ModelAdmin):
-    list_display = ('id', 'item', 'completed')
+    list_display = ('id', 'item', 'completed', 'user')
     list_editable = ('completed',)
     
 

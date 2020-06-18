@@ -8,14 +8,20 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
+
+@login_required(login_url='login')
 def home(request):
 
     if request.method == 'POST':
-        form = ListForm(request.POST or None)
+        form = ListForm(request.POST)
 
         if form.is_valid():
-            form.save()
-            all_item = List.objects.all()
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            
+            all_item = List.objects.filter(user=request.user)
 
             context = {
                 'allItems': all_item
@@ -25,8 +31,8 @@ def home(request):
 
     else:
 
-        all_item = List.objects.all()
-
+        all_item = List.objects.filter(user=request.user)
+        
         context= {
             'allItems': all_item
         }
