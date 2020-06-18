@@ -5,6 +5,7 @@ from .forms import ListForm
 from django.contrib import messages, auth
 
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
@@ -48,6 +49,7 @@ def cross_off(request, list_id):
     item.save()
     return redirect('home')
 
+@login_required(login_url='login')
 def edit(request, list_id):
     if request.method == 'POST':
         item = List.objects.get(pk=list_id)
@@ -116,4 +118,11 @@ def signup(request):
     else:
         context = {}
         return render(request, 'signup.html', context)
+
+
+def logout(request):
+    if request.method == 'POST':
+        auth.logout(request)
+        messages.success(request, 'Logged out')
+        return redirect('login')
 

@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<form class="form my-2 my-lg-4 text-center" method="post">
+    {% csrf_token %}
+    <input class="form-control bg-dark text-light mr-sm-2 mb-2" type="search" placeholder="Add Todo" aria-label="Search" name="item">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">ADD</button>
+</form>
 {% include 'partials/_alert.html' %}
 
-<table class="table table-dark mt-2">
+<table class="table table-dark mt-2 text-center">
     <thead>
         <tr>
             <th scope="col">Todo</th>
