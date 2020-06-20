@@ -31,18 +31,22 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'signup' %}">Signup</a>
-                    </li>
                 {% if user.is_authenticated %}
+                <li class="nav-item text-light mr-5 mt-2">
+                    <p>Hi!! <strong class="text-secondary">{{ request.user }}</strong></p>
+                </li>
                 <li class="nav-item ">
                     <form class="logo-link " action="{% url 'logout' %}" method="POST">
                         {% csrf_token %}
                         <button type="submit" class="logout-btn btn bg-dark text-light">logout</button>
                     </form>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">Signup</a>
                 </li>
                 </ul>
                 {% endif %}  
