@@ -144,3 +144,12 @@ a.socialIcon:hover,
     transition: all 0.8s;
     transition: all 0.8s
 }
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    padding: 5px;
+    text-align: center;
+}
